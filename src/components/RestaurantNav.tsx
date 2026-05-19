@@ -162,7 +162,7 @@ export default function RestaurantNav({ menuOpen, setMenuOpen, fullMenuOpen, set
         <div className="absolute bottom-10 flex gap-6 text-cream/30 text-xs tracking-widest uppercase">
           <span>Ежедневно</span>
           <span>·</span>
-          <span>18:00 — 23:00</span>
+          <span>08:00 — 23:00</span>
         </div>
       </div>
     </>

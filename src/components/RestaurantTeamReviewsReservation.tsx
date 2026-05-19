@@ -110,11 +110,11 @@ export default function RestaurantTeamReviewsReservation({ form, setForm, handle
               </div>
               <div className="flex items-center gap-3">
                 <Icon name="Clock" size={14} className="text-gold" />
-                <span>Ежедневно: 18:00 — 23:00</span>
+                <span>Ежедневно: 08:00 — 23:00</span>
               </div>
               <div className="flex items-center gap-3">
                 <Icon name="Phone" size={14} className="text-gold" />
-                <span>+7 (495) 123-45-67</span>
+                <span>+8 800 535-35-35</span>
               </div>
             </div>
           </div>
