@@ -77,7 +77,7 @@ export default function Index() {
     <div className="min-h-screen bg-cream font-golos">
 
       {/* NAVIGATION */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-cream/90 backdrop-blur-sm border-b border-charcoal/10">
+      <nav className="fixed top-0 left-0 right-0 z-[60] bg-cream/90 backdrop-blur-sm border-b border-charcoal/10">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <a href="#home" className="font-cormorant text-2xl font-light tracking-[0.2em] text-charcoal uppercase">
             Maison
@@ -100,34 +100,50 @@ export default function Index() {
             Забронировать
           </a>
           <button
-            className="md:hidden text-charcoal"
+            className="md:hidden text-charcoal z-[60] relative"
             onClick={() => setMenuOpen(!menuOpen)}
           >
             <Icon name={menuOpen ? "X" : "Menu"} size={22} />
           </button>
         </div>
-        {menuOpen && (
-          <div className="md:hidden bg-cream border-t border-charcoal/10 px-6 py-6 flex flex-col gap-4">
-            {NAV_LINKS.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={() => setMenuOpen(false)}
-                className="text-sm tracking-[0.12em] uppercase text-warm-gray hover:text-charcoal"
-              >
-                {link.label}
-              </a>
-            ))}
-            <a
-              href="#reservation"
-              onClick={() => setMenuOpen(false)}
-              className="text-xs tracking-[0.15em] uppercase bg-charcoal text-cream px-5 py-3 text-center mt-2 hover:bg-gold transition-colors duration-300"
-            >
-              Забронировать
-            </a>
-          </div>
-        )}
       </nav>
+
+      {/* FULLSCREEN MOBILE MENU OVERLAY */}
+      <div
+        className={`fixed inset-0 z-[55] bg-charcoal flex flex-col items-center justify-center transition-all duration-500 md:hidden ${
+          menuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        }`}
+        style={{ transform: menuOpen ? "translateY(0)" : "translateY(-20px)" }}
+      >
+        <div className="flex flex-col items-center gap-8">
+          <div className="font-cormorant text-3xl font-light tracking-[0.3em] text-gold uppercase mb-6">
+            Maison
+          </div>
+          {NAV_LINKS.map((link, i) => (
+            <a
+              key={link.href}
+              href={link.href}
+              onClick={() => setMenuOpen(false)}
+              className="font-cormorant text-4xl font-light text-cream hover:text-gold transition-colors duration-300"
+              style={{ animationDelay: `${i * 0.06}s` }}
+            >
+              {link.label}
+            </a>
+          ))}
+          <a
+            href="#reservation"
+            onClick={() => setMenuOpen(false)}
+            className="mt-6 text-xs tracking-[0.2em] uppercase bg-gold text-cream px-10 py-4 hover:bg-cream hover:text-charcoal transition-colors duration-300"
+          >
+            Забронировать стол
+          </a>
+        </div>
+        <div className="absolute bottom-10 flex gap-6 text-cream/30 text-xs tracking-widest uppercase">
+          <span>Ежедневно</span>
+          <span>·</span>
+          <span>18:00 — 23:00</span>
+        </div>
+      </div>
 
       {/* HERO */}
       <section id="home" className="relative h-screen flex items-end pb-20 overflow-hidden">
