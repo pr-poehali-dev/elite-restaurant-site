@@ -67,6 +67,7 @@ const TIME_SLOTS = ["18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00
 export default function Index() {
   const [activeMenu, setActiveMenu] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [fullMenuOpen, setFullMenuOpen] = useState(false);
   const [form, setForm] = useState({ name: "", phone: "", date: "", time: "", guests: "2" });
 
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -107,6 +108,57 @@ export default function Index() {
           </button>
         </div>
       </nav>
+
+      {/* FULL MENU OVERLAY */}
+      <div
+        className={`fixed inset-0 z-[70] bg-charcoal overflow-y-auto transition-all duration-500 ${
+          fullMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        }`}
+      >
+        <div className="max-w-3xl mx-auto px-6 py-20">
+          <div className="flex items-center justify-between mb-16">
+            <div>
+              <p className="text-gold text-xs tracking-[0.3em] uppercase mb-2">Maison</p>
+              <h2 className="font-cormorant text-5xl font-light text-cream">Полное меню</h2>
+            </div>
+            <button
+              onClick={() => setFullMenuOpen(false)}
+              className="text-cream/50 hover:text-cream transition-colors border border-cream/20 hover:border-cream/50 p-3"
+            >
+              <Icon name="X" size={20} />
+            </button>
+          </div>
+          {MENU_CATEGORIES.map((cat, ci) => (
+            <div key={cat.name} className={ci < MENU_CATEGORIES.length - 1 ? "mb-14" : ""}>
+              <div className="flex items-center gap-4 mb-8">
+                <span className="text-gold text-xs tracking-[0.3em] uppercase">{cat.name}</span>
+                <div className="flex-1 h-px bg-cream/10" />
+              </div>
+              {cat.items.map((item, i) => (
+                <div
+                  key={item.name}
+                  className={`flex items-start justify-between py-5 ${i < cat.items.length - 1 ? "border-b border-cream/10" : ""}`}
+                >
+                  <div>
+                    <div className="font-cormorant text-2xl font-light text-cream mb-1">{item.name}</div>
+                    <div className="text-xs text-warm-gray tracking-wide">{item.desc}</div>
+                  </div>
+                  <div className="font-cormorant text-xl text-gold ml-8 whitespace-nowrap">{item.price}</div>
+                </div>
+              ))}
+            </div>
+          ))}
+          <div className="mt-14 pt-10 border-t border-cream/10 text-center">
+            <a
+              href="#reservation"
+              onClick={() => setFullMenuOpen(false)}
+              className="text-xs tracking-[0.2em] uppercase bg-gold text-cream px-10 py-4 hover:bg-cream hover:text-charcoal transition-all duration-300 inline-block"
+            >
+              Забронировать стол
+            </a>
+          </div>
+        </div>
+      </div>
 
       {/* FULLSCREEN MOBILE MENU OVERLAY */}
       <div
@@ -250,7 +302,10 @@ export default function Index() {
             ))}
           </div>
           <div className="text-center mt-14">
-            <button className="text-xs tracking-[0.2em] uppercase border border-cream/30 text-cream px-8 py-3.5 hover:border-gold hover:text-gold transition-all duration-300">
+            <button
+              onClick={() => setFullMenuOpen(true)}
+              className="text-xs tracking-[0.2em] uppercase border border-cream/30 text-cream px-8 py-3.5 hover:border-gold hover:text-gold transition-all duration-300"
+            >
               Полное меню
             </button>
           </div>
